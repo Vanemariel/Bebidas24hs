@@ -126,19 +126,9 @@ namespace Bebidas24hs.DataBase.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
                     b.Property<DateTime>("fechacreacion")
                         .HasMaxLength(120)
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("lastname")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("name")
                         .IsRequired()

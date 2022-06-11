@@ -17,16 +17,6 @@ namespace Bebidas24hs.DataBase.data.database
 
         public string name { get; set; }
 
-        [Required(ErrorMessage = "El lastname del usuario es obligatorio.")]
-        [MaxLength(120, ErrorMessage = "El campo tiene como máximo {1} caracteres.")]
-
-        public string lastname { get; set; }
-
-        [Required(ErrorMessage = "El Email es obligatorio.")]
-        [MaxLength(120, ErrorMessage = "El campo tiene como máximo {1} caracteres.")]
-
-        public string email { get; set; }
-
         [Required(ErrorMessage = "El pasword del usuario es obligatorio.")]
         [MaxLength(120, ErrorMessage = "El campo tiene como máximo {1} caracteres.")]
 

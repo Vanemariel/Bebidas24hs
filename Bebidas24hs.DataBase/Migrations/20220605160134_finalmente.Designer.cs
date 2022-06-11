@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bebidas24hs.DataBase.Migrations
 {
     [DbContext(typeof(bebidabase))]
-    [Migration("20220530192510_progreso")]
-    partial class progreso
+    [Migration("20220605160134_finalmente")]
+    partial class finalmente
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,26 +28,40 @@ namespace Bebidas24hs.DataBase.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(120)
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("codproducto")
+                    b.Property<int>("codpedido")
+                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<string>("descripcion")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("fechacreacion")
+                        .HasMaxLength(120)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("valorcompra")
+                        .HasMaxLength(8)
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Id" }, "Entity_Id")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "codpedido" }, "Pedido_Codpedido")
+                        .IsUnique();
 
                     b.ToTable("pedidos");
                 });
@@ -56,26 +70,51 @@ namespace Bebidas24hs.DataBase.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(120)
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("Nombreproducto")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("PedidoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Proveedor")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("Valorproducto")
+                        .HasMaxLength(4)
+                        .HasColumnType("int");
+
+                    b.Property<int>("codproducto")
+                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.Property<DateTime>("fechacreacion")
+                        .HasMaxLength(120)
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
+
+                    b.HasIndex(new[] { "Id" }, "Entity_Id")
+                        .IsUnique()
+                        .HasDatabaseName("Entity_Id1");
+
+                    b.HasIndex(new[] { "codproducto" }, "Producto_Codproducto")
+                        .IsUnique();
 
                     b.ToTable("productos");
                 });
@@ -84,22 +123,14 @@ namespace Bebidas24hs.DataBase.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(120)
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
                     b.Property<DateTime>("fechacreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("lastname")
-                        .IsRequired()
                         .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -113,10 +144,26 @@ namespace Bebidas24hs.DataBase.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex(new[] { "Id" }, "Entity_Id")
+                        .IsUnique()
+                        .HasDatabaseName("Entity_Id2");
+
                     b.HasIndex(new[] { "pasword" }, "Usuario_Pasword")
                         .IsUnique();
 
                     b.ToTable("usuarios");
+                });
+
+            modelBuilder.Entity("Bebidas24hs.DataBase.data.database.Producto", b =>
+                {
+                    b.HasOne("Bebidas24hs.DataBase.data.database.Pedido", null)
+                        .WithMany("Producto")
+                        .HasForeignKey("PedidoId");
+                });
+
+            modelBuilder.Entity("Bebidas24hs.DataBase.data.database.Pedido", b =>
+                {
+                    b.Navigation("Producto");
                 });
 #pragma warning restore 612, 618
         }
