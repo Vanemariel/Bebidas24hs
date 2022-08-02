@@ -15,7 +15,7 @@ namespace Bebidas24hs.DataBase.data.database
         [MaxLength(150, ErrorMessage = "El campo tiene como máximo {1} caracteres.")]
 
         public string nombre { get; set; }
-
+         
         [Required(ErrorMessage = "El codigo del pedido es obligatorio.")]
         [MaxLength(4, ErrorMessage = "El campo tiene como máximo {1} caracteres.")]
 
@@ -30,6 +30,6 @@ namespace Bebidas24hs.DataBase.data.database
         [MaxLength(8, ErrorMessage = "El campo tiene como máximo {1} caracteres.")]
 
         public int valorcompra { get; set; }
-        public List<Producto>Producto { get; set; }
+        
     }
 }
