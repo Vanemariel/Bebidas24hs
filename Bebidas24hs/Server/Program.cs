@@ -1,6 +1,5 @@
 
-using Bebidas24hs.DataBase.data;
-using Microsoft.AspNetCore.ResponseCompression;
+using Bebidas24hs.DataBase.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-var conn = builder.Configuration.GetConnectionString("con");
 
-builder.Services.AddDbContext<bebidabase>(opciones => 
-opciones.UseSqlServer(conn));
+var conn = builder.Configuration.GetConnectionString("con");
+builder.Services.AddDbContext<BDContext>(opciones => 
+    opciones.UseSqlServer(conn)
+);
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

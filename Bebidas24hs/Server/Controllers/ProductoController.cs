@@ -1,5 +1,7 @@
-﻿using Bebidas24hs.DataBase.data;
-using Bebidas24hs.DataBase.data.database;
+﻿//using Bebidas24hs.DataBase.data;
+//using Bebidas24hs.DataBase.data.database;
+using Bebidas24hs.DataBase.Data;
+using Bebidas24hs.DataBase.Data.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,18 +11,18 @@ namespace Bebidas24hs.Server.Controllers
     [Route("Api/[controller]")]
     public class ProductoController : ControllerBase
     {
-        private readonly bebidabase context;
+        private readonly BDContext context;
 
-        public ProductoController(bebidabase context)
+        public ProductoController(BDContext context)
         {
             this.context = context;
         }
 
         [HttpGet]
-        //metodo que me muestra la lista
+       //metodo que me muestra la lista
         public async Task<IEnumerable<Producto>> GetAll()//obtener todo All
         {
-            List<Producto> mercaderias = await context.productos.ToListAsync();
+            List<Producto> mercaderias = await context.Productos.ToListAsync();
             //retorna la lista de la tabla 
 
             List<Producto> Listado = new List<Producto>();
@@ -29,10 +31,9 @@ namespace Bebidas24hs.Server.Controllers
             {
                 Listado.Add(new Producto
                 {
-                    codproducto = mercaderia.codproducto,   
-                    Nombreproducto = mercaderia.Nombreproducto, 
-                    Proveedor = mercaderia.Proveedor,   
-                    Valorproducto = mercaderia.Valorproducto,   
+                    Id = mercaderia.Id,   
+                    Codigo = mercaderia.Codigo, 
+                    Precio = mercaderia.Precio,     
                     Descripcion = mercaderia.Descripcion,
                 });
             }
@@ -43,7 +44,7 @@ namespace Bebidas24hs.Server.Controllers
         public async Task<ActionResult<Producto>> GetById(int id)
         {
             // await metodo a ejecutar asincronico
-            Producto prod = await context.productos.Where(x => x.Id == id).FirstOrDefaultAsync();
+            Producto prod = await context.Productos.Where(x => x.Id == id).FirstOrDefaultAsync();
             //x=>x.id x seria el registro donde esta el id 
             if (prod == null)
             {
@@ -57,7 +58,7 @@ namespace Bebidas24hs.Server.Controllers
         {
             try
             {
-                context.productos.Add(prod);
+                context.Productos.Add(prod);
                 await context.SaveChangesAsync();
                 return prod;
             }
@@ -75,7 +76,7 @@ namespace Bebidas24hs.Server.Controllers
             {
                 return BadRequest("No es correcto");
             }
-            Producto prod = await context.productos.Where(x => x.Id == id).FirstOrDefaultAsync();
+            Producto prod = await context.Productos.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (prod == null)//parametro de q no puede ser nulo el dato
             {
                 return NotFound($"No existe el Producto con id igual a {id}.");//retorna error
@@ -84,9 +85,9 @@ namespace Bebidas24hs.Server.Controllers
             //ejecutandose por lo q el uso correcto es el try catch
             try
             {
-                context.productos.Remove(prod);//borrar el producto de la table productos
+                context.Productos.Remove(prod);//borrar el producto de la table productos
                 await context.SaveChangesAsync();//busca el dato guardado
-                return Ok($"la pelicua o serie  {prod} ha sido borrado.");//retorna q se borro
+                return Ok($"El producto {prod} ha sido borrado.");//retorna q se borro
             }
             catch (Exception) //se captura la excepcion del try
             {
