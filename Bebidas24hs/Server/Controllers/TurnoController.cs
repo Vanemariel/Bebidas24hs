@@ -18,8 +18,8 @@ namespace Bebidas24hs.Server.Controllers
         //metodo que me muestra la lista
         public async Task<ActionResult<List<Turno>>> GetAll()
         {
-            return await context.Turnos.Include(x => x.Ventas).ToListAsync();
-            //return await context.Empleados.ToListAsync();
+            //return await context.Turnos.Include(x => x.Ventas).ToListAsync();
+            return await context.Turnos.ToListAsync();
         }
 
     }

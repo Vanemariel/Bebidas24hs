@@ -1,0 +1,23 @@
+﻿@page "/Producto/Create"
+@inject NavigationManager navigationManager
+@inject IHttpService http
+<h2>New Producto</h2>
+
+@code {
+    private Producto Productos = new();
+
+    private async Task GrabarNuevo()
+    {
+        var httpRespuesta = await http.Post<Producto>("Api/[controller]", Productos);
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        navigationManager.NavigateTo("/Producto");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/Producto");
+    }
+}

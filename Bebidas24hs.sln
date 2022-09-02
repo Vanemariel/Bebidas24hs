@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebidas24hs.Client", "Bebid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebidas24hs.Comunes", "Bebidas24hs\Shared\Bebidas24hs.Comunes.csproj", "{96808921-69EB-44C7-88B5-CF60AB956457}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bebidas24hs.DataBase", "Bebidas24hs.DataBase\Bebidas24hs.DataBase.csproj", "{DC4F55F2-FD10-4E3B-B530-BE3A0033B48D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bebidas24hs.DataBase", "Bebidas24hs.DataBase\Bebidas24hs.DataBase.csproj", "{DC4F55F2-FD10-4E3B-B530-BE3A0033B48D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -22,8 +22,8 @@ namespace Bebidas24hs.Server.Controllers
         //metodo que me muestra la lista completa  
         public async Task<ActionResult<List<Empleado>>> GetAll()
         {
-            return await context.Empleados.Include(x => x.Ventas).ToListAsync();
-            //return await context.Empleados.ToListAsync();
+            //return await context.Empleados.Include(x => x.Ventas).ToListAsync();
+            return await context.Empleados.ToListAsync();
         }
 
         [HttpPost("{id:int}")]

@@ -14,7 +14,7 @@ namespace Bebidas24hs.DataBase.Data.Entidades
     public class Producto : BaseEntity
     {
         [Required(ErrorMessage = "Campo obligatorio.")]
-        public float Precio { get; set; }
+        public string Precio { get; set; }
 
 
         [Required(ErrorMessage = "Campo obligatorio.")]

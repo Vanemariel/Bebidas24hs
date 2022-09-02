@@ -7,12 +7,52 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\IndiceEmpleados.razor" />
+    <Content Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
+    <Content Remove="Pages\PageTurnos\TurnoCrear.razor" />
+    <Content Remove="Pages\PageVentas\VentaFormulario.razor" />
+    <Content Remove="Pages\PageVentas\VentasCrear.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.5" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Bebidas24hs.DataBase\Bebidas24hs.DataBase.csproj" />
     <ProjectReference Include="..\Shared\Bebidas24hs.Comunes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\PageEmpleados\EmpleadoEditar.razor" />
+    <None Include="Pages\PageEmpleados\IndiceEmpleados.razor" />
+    <None Include="Pages\PageTurnos\TurnoCrear.razor" />
+    <None Include="Pages\PageVentas\VentaFormulario.razor" />
+    <None Include="Pages\PageVentas\VentasCrear.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
+    <_ContentIncludedByDefault Remove="Pages\PageTurnos\TurnoCrear.razor" />
+    <_ContentIncludedByDefault Remove="Pages\PageVentas\VentaFormulario.razor" />
+    <_ContentIncludedByDefault Remove="Pages\PageVentas\VentasCrear.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\PageTurnos\TurnoCrear.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\PageVentas\VentasCrear.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\PageVentas\VentaFormulario.razor" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,40 @@
+﻿<EditForm Model="Productos" OnValidSubmit="onValidSubmit">
+ <div class="form-group">
+        <label>Precio</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Productos.Precio" />
+            <ValidationMessage For="@(() => Productos.Precio)" />
+        </div>
+    </div>
+<div class="form-group">
+        <label>Codigo</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Productos.Codigo" />
+            <ValidationMessage For="@(() => Productos.Codigo)" />
+        </div>
+    </div>
+<div class="form-group">
+        <label>Descripcion</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Productos.Descripcion" />
+            <ValidationMessage For="@(() => Productos.Descripcion)" />
+        </div>
+    </div>
+<button class="btn btn-primary" type="submit">Guardar</button>
+<button class="btn btn-secondary" @onclick="onCancel" type="button">Cancelar</button>
+
+</EditForm>    
+@code {
+    //imput text es un text box. cada vez que dice class aplico boostrap
+    //los form group forman un grupo
+    //parametro de propiedad de la clase Producto 
+    [Parameter] public Producto Productos{ get; set; } //cargo el objeto de tipo productos
+    //parametro public pero de eventos de los button  
+    //onvalidSudmit es el metodo que crear me va mandar cuando coloque el grabar nuevo
+    [Parameter] public EventCallback onValidSubmit { get; set; }
+    [Parameter] public EventCallback onCancel { get; set; } 
+
+//los div son bloques donde utilizo bostrap para diseño
+//este formulario no tiene @page es puramente html
+
+}
