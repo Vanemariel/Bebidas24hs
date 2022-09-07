@@ -19,8 +19,8 @@ namespace Bebidas24hs.DataBase.Data.Entidades
         // Claves foraneas 
         public List<Producto> Productos { get; set; }
 
-        //[ForeignKey("TurnoId")]
-        //public Turno Turno { get; set; }
+        [ForeignKey("TurnoId")]
+        public Turno Turno { get; set; }
         
         [ForeignKey("EmpleadoId")]
         public Empleado Empleado { get; set; }

@@ -35,6 +35,6 @@ namespace Bebidas24hs.DataBase.Data.Entidades
         public string HorarioHasta { get; set; }
 
 
-        //public List<Venta> Ventas { get; set; }
+        public List<Venta> Ventas { get; set; }
     }
 }
