@@ -19,15 +19,16 @@
                             <div class="modal-footer">
                                 @if (verCancelar)
                                 {
-                <button @onclick="onCancel" type="button" class="btn btn-secondary"
-                        data-dismiss="modal">
-                    @textCancelar
-                </button>}
+                                     <button @onclick="onCancel" type="button" class="btn btn-secondary"
+                                             data-dismiss="modal">
+                                           @textCancelar
+                                     </button>}
                                 @if (verOk)
                                 {
-                <button @onclick="onConfirm" type="button" class="btn btn-primary">
-                    @textOk
-                </button>}
+                                    <button @onclick="onConfirm" type="button" class="btn btn-primary">
+                                        @textOk
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -40,12 +41,10 @@
             [Parameter] public string textCancelar { get; set; } = "Cancelar";
             [Parameter] public string textOk { get; set; } = "Ok";
             [Parameter] public string Titulo { get; set; } = "Confirmación";
-
-    //ESTOS PARAMETROS SON LOS QUE ESTAN ARRIBA PARA LA VISTA
             [Parameter] public EventCallback onConfirm { get; set; }
             [Parameter] public EventCallback onCancel { get; set; }
             [Parameter] public RenderFragment ChildContent { get; set; }
-
+  //ESTOS PARAMETROS SON LOS QUE ESTAN ARRIBA PARA LA VISTa
     public void Mostrar() => MostrarConfirmacion = true;
     
     public void Ocultar() => MostrarConfirmacion = false; 

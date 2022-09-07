@@ -9,9 +9,8 @@
   <ItemGroup>
     <Content Remove="Pages\IndiceEmpleados.razor" />
     <Content Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
-    <Content Remove="Pages\PageTurnos\TurnoCrear.razor" />
-    <Content Remove="Pages\PageVentas\VentaFormulario.razor" />
-    <Content Remove="Pages\PageVentas\VentasCrear.razor" />
+    <Content Remove="Pages\PageVenta\IndiceVenta.razor" />
+    <Content Remove="Pages\PageVenta\VentaFormulario.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,9 +26,8 @@
   <ItemGroup>
     <None Include="Pages\PageEmpleados\EmpleadoEditar.razor" />
     <None Include="Pages\PageEmpleados\IndiceEmpleados.razor" />
-    <None Include="Pages\PageTurnos\TurnoCrear.razor" />
-    <None Include="Pages\PageVentas\VentaFormulario.razor" />
-    <None Include="Pages\PageVentas\VentasCrear.razor" />
+    <None Include="Pages\PageVenta\IndiceVenta.razor" />
+    <None Include="Pages\PageVenta\VentaFormulario.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,21 +36,16 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
-    <_ContentIncludedByDefault Remove="Pages\PageTurnos\TurnoCrear.razor" />
-    <_ContentIncludedByDefault Remove="Pages\PageVentas\VentaFormulario.razor" />
-    <_ContentIncludedByDefault Remove="Pages\PageVentas\VentasCrear.razor" />
+    <_ContentIncludedByDefault Remove="Pages\PageVenta\IndiceVenta.razor" />
+    <_ContentIncludedByDefault Remove="Pages\PageVenta\VentaFormulario.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\PageTurnos\TurnoCrear.razor" />
+    <UpToDateCheckInput Remove="Pages\PageVenta\IndiceVenta.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\PageVentas\VentasCrear.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\PageVentas\VentaFormulario.razor" />
+    <UpToDateCheckInput Remove="Pages\PageVenta\VentaFormulario.razor" />
   </ItemGroup>
 
 </Project>

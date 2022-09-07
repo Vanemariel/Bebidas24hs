@@ -1,9 +1,32 @@
-﻿@page "/Turno/Crear"
+﻿@page "/Turno/Create"
+@using Bebidas24hs.Client.Services.Interface
+@using Bebidas24hs.DataBase.Data.Entidades
+@using Bebidas24hs.Client.Pages.PageTurnos
 @inject NavigationManager navigationManager
 @inject IHttpService http
 
-<h3>TurnoCrear</h3>
+<h3>Crear Turno</h3>
+
+<TurnoFormulario onValidSubmit="GrabarNuevo" Turno="turno" onCancel="Cancelar" />
+
+
 
 @code {
+    private Turno Turnos = new Turno();
 
+    private async Task GrabarNuevo()
+    {
+        var httpRespuesta = await http.Post<Turno>("Api/[controller]", Turnos);
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        navigationManager.NavigateTo("/Turno");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/Turno");
+    }
 }
+

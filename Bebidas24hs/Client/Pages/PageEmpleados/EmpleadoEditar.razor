@@ -1,5 +1,46 @@
-﻿<h3>EmpleadoEditar</h3>
+﻿@page "/empleado/editar/{Id:int}"
+@using Bebidas24hs.DataBase.Data.Entidades
+@inject NavigationManager navigationManager
+@inject IHttpService http
+
+<h4>EmpleadoEditar</h4>
+
+
 
 @code {
+    private Empleado empleado;
+    [Parameter] public int Id { get; set; }
 
+    protected async override Task OnInitializedAsync()
+    {  
+        await MostrarEmpleado();
+    }
+
+    private async Task MostrarEmpleado()
+    {
+        var httpRespuesta = await http.Get<Empleado>($"Api/[controller]/{Id}");
+        if (httpRespuesta.Error)
+        {
+             var body = await httpRespuesta.GetBody();
+        }
+        else
+        {
+        empleado = httpRespuesta.Respuesta;
+        }
+    }
+
+    private async Task GrabarModificacion()
+    {
+           var httpRespuesta = await http.Put<Empleado>($"Api/[controller]/{Id}", empleado);
+           if (httpRespuesta.Error)
+           {
+                var body = await httpRespuesta.GetBody();
+           }
+                navigationManager.NavigateTo("/Empleado");
+    }
+
+    private void Cancelar()
+    {
+         navigationManager.NavigateTo("/Empleado");
+    } 
 }

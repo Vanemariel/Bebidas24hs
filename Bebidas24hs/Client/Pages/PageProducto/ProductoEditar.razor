@@ -1,9 +1,9 @@
-﻿@page "/producto/editar/{ProductoId:int}"
+﻿@page "/producto/editar/{Id:int}"
 @inject NavigationManager navigationManager
 @inject IHttpService http
 
 <h1>producto editar</h1>
-<Studentsformulario onValidSubmit="GrabarModificacion" Estudiante="estudiante" onCancel="Cancelar" />
+<ProductoFormulario onValidSubmit="GrabarModificacion" Producto="producto" onCancel="Cancelar" />
 
 @code { 
     
@@ -12,10 +12,10 @@
 
     protected async override Task OnInitializedAsync()
     {  
-        await MostrarEstudiante();
+        await MostrarProducto();
     }
 
-    private async Task MostrarEstudiante()
+    private async Task MostrarProducto()
     {
         var httpRespuesta = await http.Get<Producto>($"Api/[controller]/{Id}");
         if (httpRespuesta.Error)

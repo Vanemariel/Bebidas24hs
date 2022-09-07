@@ -1,7 +1,106 @@
 ﻿@page "/Empleados"
 @inject IHttpService http
-<h1>Indice de Empleados</h1>
+<h1>Empleados</h1>
+
+<a class="btn btn-primary" href="Empleado/Create">Nuevo</a>
+<a class="colorFondo"</a>
+<br />
+<table>
+    <tr>
+        <th>Id</th>
+
+        <th>Name</th>
+
+        <th>Pasword</th>
+    </tr>
+    @if (empleado == null)
+    {
+        <tr>Cargando.....</tr>
+    }
+    else if (empleado.Count == 0)
+    {
+        <tr>No existen empleados</tr>
+    }
+    else
+    {
+        @foreach (var item in empleado)
+        {
+            <tr>
+                <tr>@item.Id</tr>
+                <td>@item.Name</td>
+                <td>@item.Password</td>
+                <td>
+                    <a class="btn btn-success"
+                       href="empleado/editar/@item.Id">
+                        Editar
+                    </a>
+                </td>
+                <td><button class="btn btn-warning" @onclick="()=>Eliminar(item)">Eliminar</button></td>
+            </tr>
+        }
+    }
+</table>
+
+<Confirmacion @ref="confirmacion"
+              onConfirm="GrabarEliminar"
+              onCancel="Cancelar"
+              Titulo="BORRAR"
+              textCancelar="Salir"
+              textOk="Aceptar">
+    <div>¿Desea eliminar el empleado @eliminarEmpleado.Id?</div>
+</Confirmacion>
+
 
 @code {
+    List<
+        Bebidas24hs.DataBase.Data.Entidades.Empleado
+     > empleado;
+    Confirmacion confirmacion;
+
+    Bebidas24hs.DataBase.Data.Entidades.Empleado eliminarEmpleado;
+
+    string variableInventada = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        await Leer();
+    }
+
+    private async Task Leer()
+    {    
+        var respuestaHttp = await http.Get<List<Bebidas24hs.DataBase.Data.Entidades.Empleado>>("Api/Producto");
+      
+        if (!respuestaHttp.Error)
+        {
+            empleado = respuestaHttp.Respuesta;           
+        }
+    }
+
+
+        private void Eliminar(Bebidas24hs.DataBase.Data.Entidades.Empleado empleadoEliminar)
+        {
+            confirmacion.Mostrar();
+            eliminarEmpleado = empleadoEliminar;
+        }
+
+
+        private async Task GrabarEliminar()
+        {
+            var respuesta = await http.Delete("Api/Empleado/{eliminarEmpleado.Id}");
+            if (respuesta.Error)
+
+            {
+                var body = await respuesta.GetBody();
+            }
+            Cancelar();
+            await Leer();
+        }
+
+        private void Cancelar()
+        {
+            confirmacion.Ocultar();
+            eliminarEmpleado = null;
+        }
 
 }

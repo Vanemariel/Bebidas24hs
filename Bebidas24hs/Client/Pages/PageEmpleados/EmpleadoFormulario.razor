@@ -1,5 +1,31 @@
-﻿<h3>EmpleadoFormulario</h3>
-
+﻿<EditForm Model="Empleados" OnValidSubmit="onValidSubmit">
+ <div class="form-group">
+        <label>Name</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Empleados.Name" />
+            <ValidationMessage For="@(() => Empleados.Name)" />
+        </div>
+    </div>
+<div class="form-group">
+        <label>Password</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Empleados.Password" />
+            <ValidationMessage For="@(() => Empleados.Password)" />
+        </div>
+    </div>
+</EditForm>    
 @code {
+    //imput text es un text box. cada vez que dice class aplico boostrap
+    //los form group forman un grupo
+    //parametro de propiedad de la clase Empleado 
+    [Parameter] public Empleado Empleados{ get; set; } //cargo el objeto de tipo empleados
+    //parametro public pero de eventos de los button  
+    //onvalidSudmit es el metodo que crear me va mandar cuando coloque el grabar nuevo
+    [Parameter] public EventCallback onValidSubmit { get; set; }
+    [Parameter] public EventCallback onCancel { get; set; } 
+
+//los div son bloques donde utilizo bostrap para diseño
+//este formulario no tiene @page es puramente html
 
 }
+

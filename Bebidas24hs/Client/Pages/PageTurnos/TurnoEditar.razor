@@ -4,6 +4,43 @@
 
 <h3>TurnoEditar</h3>
 
-@code {
+<TurnoFormulario onValidSubmit="GrabarModificacion" Turno="turno" onCancel="Cancelar" />
 
+@code { 
+    
+    private Turno turno;
+    [Parameter] public int Id { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {  
+        await MostrarTurno();
+    }
+
+    private async Task MostrarTurno()
+    {
+        var httpRespuesta = await http.Get<Turno>($"Api/[controller]/{Id}");
+        if (httpRespuesta.Error)
+        {
+             var body = await httpRespuesta.GetBody();
+        }
+        else
+        {
+        turno = httpRespuesta.Respuesta;
+        }
+    }
+
+    private async Task GrabarModificacion()
+    {
+           var httpRespuesta = await http.Put<Turno>($"Api/[controller]/{Id}", turno);
+           if (httpRespuesta.Error)
+           {
+                var body = await httpRespuesta.GetBody();
+           }
+                navigationManager.NavigateTo("/Turno");
+    }
+
+    private void Cancelar()
+    {
+         navigationManager.NavigateTo("/Turno");
+    } 
 }

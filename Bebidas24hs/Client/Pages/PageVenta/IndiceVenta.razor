@@ -1,41 +1,41 @@
-﻿@page "/producto"
+﻿@page "/venta"
+@using Bebidas24hs.Client.Shared
 @inject IHttpService http
 <h1>Producto</h1>
 
-<a class="btn btn-primary" href="Producto/Create">Nuevo</a>
-
+<a class="btn btn-primary" href="Venta/Create">Nuevo</a>
+<a class="colorFondo"</a>
 <br />
 <table>
     <tr>
         <th>Id</th>
 
-        <th>Precio</th>
+        <th>EmpleadoId</th>
 
-        <th>Codigo</th>
+        <th>TurnoId</th>
 
-        <th>Descripcion</th>
 
     </tr>
-    @if (producto == null)
+    @if (venta == null)
     {
         <tr>Cargando.....</tr>
     }
-    else if (producto.Count == 0)
+    else if (venta.Count == 0)
     {
-        <tr>No existen productos</tr>
+        <tr>No existen ventas</tr>
     }
     else
     {
-        @foreach (var item in producto)
+        @foreach (var item in venta)
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.Precio</td>
-                <td>@item.Codigo</td>
-                <td>@item.Descripcion</td>
+                <td>@item.EmpleadoId</td>
+                <td>@item.TurnoId</td>
+               
                 <td>
                     <a class="btn btn-success"
-                       href="producto/editar/@item.Id">
+                       href="venta/editar/@item.Id">
                         Editar
                     </a>
                 </td>
@@ -44,24 +44,23 @@
         }
     }
 </table>
-
 <Confirmacion @ref="confirmacion"
               onConfirm="GrabarEliminar"
               onCancel="Cancelar"
               Titulo="BORRAR"
               textCancelar="Salir"
               textOk="Aceptar">
-    <div>¿Desea eliminar el producto @eliminarProducto.Id?</div>
+    <div>¿Desea eliminar el empleado @eliminarEmpleado.Id?</div>
 </Confirmacion>
 
 
 @code {
     List<
-        Bebidas24hs.DataBase.Data.Entidades.Producto
+        Bebidas24hs.DataBase.Data.Entidades.Venta
      > producto;
-    Shared.Confirmacion confirmacion;
+    Confirmacion confirmacion;
 
-    Bebidas24hs.DataBase.Data.Entidades.Producto eliminarProducto;
+    Bebidas24hs.DataBase.Data.Entidades.Venta eliminarVenta;
 
     string variableInventada = "";
 
@@ -73,7 +72,7 @@
 
     private async Task Leer()
     {    
-        var respuestaHttp = await http.Get<List<Bebidas24hs.DataBase.Data.Entidades.Producto>>("Api/Producto");
+        var respuestaHttp = await http.Get<List<Bebidas24hs.DataBase.Data.Entidades.Venta>>("Api/Venta");
       
         if (!respuestaHttp.Error)
         {
@@ -82,7 +81,7 @@
     }
 
 
-        private void Eliminar(Bebidas24hs.DataBase.Data.Entidades.Producto productoEliminar)
+        private void Eliminar(Bebidas24hs.DataBase.Data.Entidades.Venta ventaEliminar)
         {
             confirmacion.Mostrar();
             eliminarProducto = productoEliminar;
@@ -91,7 +90,7 @@
 
         private async Task GrabarEliminar()
         {
-            var respuesta = await http.Delete("Api/Producto/{eliminarProducto.Id}");
+            var respuesta = await http.Delete("Api/Venta/{eliminarVenta.Id}");
             if (respuesta.Error)
 
             {
@@ -104,7 +103,7 @@
         private void Cancelar()
         {
             confirmacion.Ocultar();
-            eliminarProducto = null;
+            eliminarVenta = null;
         }
 //los @page me dan la direccion
 //los href me re dirigen a los otros componentes razor de crear o editar
