@@ -50,7 +50,7 @@ namespace Bebidas24hs.Server.Controllers
                 return NotFound("no existe la venta a modificar.");
             }
             //si es correcto puedo modificar todo lo q sigue
-            ventaencontrada.TurnoId = Producto.TurnoId;
+            //ventaencontrada.TurnoId = Producto.TurnoId;
             ventaencontrada.EmpleadoId = Producto.EmpleadoId;
             ventaencontrada.Id = Producto.Id;
             

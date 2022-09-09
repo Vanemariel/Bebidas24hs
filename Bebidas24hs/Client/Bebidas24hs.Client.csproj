@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Content Remove="Pages\IndiceEmpleados.razor" />
-    <Content Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
     <Content Remove="Pages\PageVenta\IndiceVenta.razor" />
     <Content Remove="Pages\PageVenta\VentaFormulario.razor" />
   </ItemGroup>
@@ -24,18 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\PageEmpleados\EmpleadoEditar.razor" />
     <None Include="Pages\PageEmpleados\IndiceEmpleados.razor" />
     <None Include="Pages\PageVenta\IndiceVenta.razor" />
     <None Include="Pages\PageVenta\VentaFormulario.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\PageEmpleados\EmpleadoEditar.razor" />
     <_ContentIncludedByDefault Remove="Pages\PageVenta\IndiceVenta.razor" />
     <_ContentIncludedByDefault Remove="Pages\PageVenta\VentaFormulario.razor" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿@page "/empleado/editar/{Id:int}"
+﻿@page "/EmpleadosEditar/{id:int}"
+@using Bebidas24hs.Client.Services.Interface
 @using Bebidas24hs.DataBase.Data.Entidades
 @inject NavigationManager navigationManager
 @inject IHttpService http
@@ -6,14 +7,20 @@
 <h4>EmpleadoEditar</h4>
 
 
+PUTO EL QU ELEE @Id
+
+
+
 
 @code {
-    private Empleado empleado;
+
     [Parameter] public int Id { get; set; }
 
+    private Empleado empleado;
+
     protected async override Task OnInitializedAsync()
-    {  
-        await MostrarEmpleado();
+    {
+        //await MostrarEmpleado(); // TODO: ACA ESTA EL PROBLEMA
     }
 
     private async Task MostrarEmpleado()
@@ -21,26 +28,26 @@
         var httpRespuesta = await http.Get<Empleado>($"Api/[controller]/{Id}");
         if (httpRespuesta.Error)
         {
-             var body = await httpRespuesta.GetBody();
+            var body = await httpRespuesta.GetBody();
         }
         else
         {
-        empleado = httpRespuesta.Respuesta;
+            empleado = httpRespuesta.Respuesta;
         }
     }
 
     private async Task GrabarModificacion()
     {
-           var httpRespuesta = await http.Put<Empleado>($"Api/[controller]/{Id}", empleado);
-           if (httpRespuesta.Error)
-           {
-                var body = await httpRespuesta.GetBody();
-           }
-                navigationManager.NavigateTo("/Empleado");
+        var httpRespuesta = await http.Put<Empleado>($"Api/[controller]/{Id}", empleado);
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        navigationManager.NavigateTo("/Empleado");
     }
 
     private void Cancelar()
     {
-         navigationManager.NavigateTo("/Empleado");
-    } 
+        navigationManager.NavigateTo("/Empleado");
+    }
 }
