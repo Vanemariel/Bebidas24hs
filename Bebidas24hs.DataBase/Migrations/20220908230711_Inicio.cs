@@ -4,7 +4,7 @@
 
 namespace Bebidas24hs.DataBase.Migrations
 {
-    public partial class inicio : Migration
+    public partial class Inicio : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,27 +23,11 @@ namespace Bebidas24hs.DataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Turnos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Dia = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    HorarioDesde = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    HorarioHasta = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Turnos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ventas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TurnoId = table.Column<int>(type: "int", nullable: false),
                     EmpleadoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -55,12 +39,6 @@ namespace Bebidas24hs.DataBase.Migrations
                         principalTable: "Empleados",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Ventas_Turnos_TurnoId",
-                        column: x => x.TurnoId,
-                        principalTable: "Turnos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,10 +47,10 @@ namespace Bebidas24hs.DataBase.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    VentaId = table.Column<int>(type: "int", nullable: false),
                     Precio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VentaId = table.Column<int>(type: "int", nullable: true)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,8 +59,44 @@ namespace Bebidas24hs.DataBase.Migrations
                         name: "FK_Productos_Ventas_VentaId",
                         column: x => x.VentaId,
                         principalTable: "Ventas",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Empleados",
+                columns: new[] { "Id", "Name", "Password" },
+                values: new object[] { 1, "Mariano", "TeletubiTutu" });
+
+            migrationBuilder.InsertData(
+                table: "Empleados",
+                columns: new[] { "Id", "Name", "Password" },
+                values: new object[] { 2, "Juanchi", "JuanchiLanchi" });
+
+            migrationBuilder.InsertData(
+                table: "Empleados",
+                columns: new[] { "Id", "Name", "Password" },
+                values: new object[] { 3, "Vanesa", "PepeSalta" });
+
+            migrationBuilder.InsertData(
+                table: "Ventas",
+                columns: new[] { "Id", "EmpleadoId" },
+                values: new object[] { 112, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Ventas",
+                columns: new[] { "Id", "EmpleadoId" },
+                values: new object[] { 2321, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Productos",
+                columns: new[] { "Id", "Codigo", "Descripcion", "Precio", "VentaId" },
+                values: new object[] { 1, "3FQA", "Coca Cola", "200", 112 });
+
+            migrationBuilder.InsertData(
+                table: "Productos",
+                columns: new[] { "Id", "Codigo", "Descripcion", "Precio", "VentaId" },
+                values: new object[] { 2, "12312FQA", "Pepsi", "300", 2321 });
 
             migrationBuilder.CreateIndex(
                 name: "Entity_Id",
@@ -103,18 +117,6 @@ namespace Bebidas24hs.DataBase.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "Entity_Id2",
-                table: "Turnos",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "TurnoDiaHorarioDesdeHasta",
-                table: "Turnos",
-                columns: new[] { "Dia", "HorarioDesde", "HorarioHasta" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "Entity_Id3",
                 table: "Ventas",
                 column: "Id",
                 unique: true);
@@ -123,11 +125,6 @@ namespace Bebidas24hs.DataBase.Migrations
                 name: "IX_Ventas_EmpleadoId",
                 table: "Ventas",
                 column: "EmpleadoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ventas_TurnoId",
-                table: "Ventas",
-                column: "TurnoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -140,9 +137,6 @@ namespace Bebidas24hs.DataBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "Empleados");
-
-            migrationBuilder.DropTable(
-                name: "Turnos");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Bebidas24hs.DataBase.Data.Comun;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bebidas24hs.DataBase.Data.Entidades
 {
@@ -8,7 +8,6 @@ namespace Bebidas24hs.DataBase.Data.Entidades
     #endregion
     public class Empleado: BaseEntity
     {
-        public List<Venta> Ventas { get; set; }
 
         [Required(ErrorMessage = "Campo obligatorio.")]
         public string Name { get; set; }
@@ -17,5 +16,8 @@ namespace Bebidas24hs.DataBase.Data.Entidades
         [Required(ErrorMessage = "Campo obligatorio.")]
         public string Password { get; set; }
 
+
+        [InverseProperty("Empleado")]
+        public List<Venta> Ventas { get; set; }
     }
 }
