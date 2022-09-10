@@ -45,7 +45,7 @@ namespace Bebidas24hs.Server.Controllers
         }
 
 
-        [HttpPost("{id:int}")]
+        [HttpPost]
         public async Task<ActionResult<Empleado>> Insert(Empleado empleado)
         { 
             try

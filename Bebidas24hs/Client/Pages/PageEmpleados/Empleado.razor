@@ -43,7 +43,7 @@ else
 
     [Parameter] public int Id { get; set; }
 
-    private EmpleadoDatos empleado = new EmpleadoDatos();
+    public EmpleadoDatos empleado = new EmpleadoDatos();
     public class EmpleadoDatos /// Borrar
     {
         public int Id { get; set; }
@@ -55,7 +55,7 @@ else
     {
         if (Id != 0)
         {
-           await MostrarEmpleado();        
+            await MostrarEmpleado();        
         }
     }
 
@@ -70,12 +70,22 @@ else
         {
             empleado = httpRespuesta.Respuesta;
         }
-    
+
     }
 
     private async Task GrabarModificacion() // Adaptar para que cree uno nuevo
     {
-        var httpRespuesta = await http.Put<EmpleadoDatos>($"Api/Empleado/{Id}", empleado);
+        var httpRespuesta = new HttpRespuesta<object>();
+
+        if (Id != 0)
+        {
+            httpRespuesta = await http.Put<EmpleadoDatos>($"Api/Empleado/{Id}", empleado);
+        }
+        else 
+        {
+            httpRespuesta = await http.Post<EmpleadoDatos>($"Api/Empleado", empleado);
+        }
+
         if (httpRespuesta.Error)
         {
             var body = await httpRespuesta.GetBody();

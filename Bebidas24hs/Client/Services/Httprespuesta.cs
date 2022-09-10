@@ -17,6 +17,8 @@ namespace Bebidas24hs.Client.Services
             this.httpResponseMessage = httpResponseMessage;
         }
 
+        public HttpRespuesta() { }
+
         public HttpRespuesta(date respuesta,
                              bool error,
                              HttpResponseMessage httpResponseMessage)

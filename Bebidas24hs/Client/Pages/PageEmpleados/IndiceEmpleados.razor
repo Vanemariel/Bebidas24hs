@@ -53,7 +53,7 @@
               Titulo="BORRAR"
               textCancelar="Salir"
               textOk="Aceptar">
-    <div>¿Desea eliminar el empleado @eliminarEmpleado.Id?</div>
+    <div>¿Desea eliminar el empleado @eliminarEmpleado.Name?</div>
 </Confirmacion>
 
 
@@ -111,9 +111,8 @@
 
     private async Task GrabarEliminar()
         {
-            var respuesta = await http.Delete("Api/Empleado/{eliminarEmpleado.Id}");
+            var respuesta = await http.Delete($"Api/Empleado/{eliminarEmpleado.Id}");
             if (respuesta.Error)
-
             {
                 var body = await respuesta.GetBody();
             }
