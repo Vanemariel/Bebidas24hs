@@ -5,7 +5,15 @@
 @inject NavigationManager navigationManager
 @inject IHttpService http
 
-<h4>Editar Empleado</h4>
+
+@if (Id == 0)
+{
+    <h4>Nuevo Empleado</h4>    
+}
+else 
+{
+    <h4>Editar Empleado</h4>
+}
 
 
 <EditForm Model="empleado" OnSubmit="GrabarModificacion">
@@ -26,7 +34,6 @@
     <div class="form-group">
         <div class="p-2">
             <button class="btn btn-warning" @onclick="Cancelar">Cancelar</button>
-             @*<button class="btn btn-warning" @onclick="()=>onValidSubmit.InvokeAsync(Empleados)">Cancelar</button>*@
             <button class="btn btn-warning" type="submit">Guardar</button>
         </div>
     </div>
@@ -36,8 +43,8 @@
 
     [Parameter] public int Id { get; set; }
 
-    private EmpleadoA empleado = new EmpleadoA();
-    public class EmpleadoA /// Borrar
+    private EmpleadoDatos empleado = new EmpleadoDatos();
+    public class EmpleadoDatos /// Borrar
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -46,7 +53,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (Id != null)
+        if (Id != 0)
         {
            await MostrarEmpleado();        
         }
@@ -54,7 +61,7 @@
 
     private async Task MostrarEmpleado()
     {
-        var httpRespuesta = await http.Get<EmpleadoA>($"Api/Empleado/{Id}");
+        var httpRespuesta = await http.Get<EmpleadoDatos>($"Api/Empleado/{Id}");
         if (httpRespuesta.Error)
         {
             var body = await httpRespuesta.GetBody();
@@ -66,9 +73,9 @@
     
     }
 
-    private async Task GrabarModificacion()
+    private async Task GrabarModificacion() // Adaptar para que cree uno nuevo
     {
-        var httpRespuesta = await http.Put<EmpleadoA>($"Api/Empleado/{Id}", empleado);
+        var httpRespuesta = await http.Put<EmpleadoDatos>($"Api/Empleado/{Id}", empleado);
         if (httpRespuesta.Error)
         {
             var body = await httpRespuesta.GetBody();

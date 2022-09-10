@@ -6,13 +6,7 @@
 
 
 <table>
-    <tr>
-        <th class="p-3">Id</th>
 
-        <th class="p-3">Name</th>
-
-        <th class="p-3">Pasword</th>
-    </tr>
     @if (empleados == null)
     {
         <tr>Cargando.....</tr>
@@ -23,7 +17,19 @@
     }
     else
     {
+        <div class="form-group">
+            <div class="p-2">
+                <button class="btn btn-warning" @onclick="Nuevo">Nuevo</button>
+            </div>
+        </div>
 
+        <tr>
+            <th class="p-3">Id</th>
+
+            <th class="p-3">Name</th>
+
+            <th class="p-3">Pasword</th>
+        </tr>
 
         @foreach (var item in empleados)
         {
@@ -52,15 +58,16 @@
 
 
 @code {
-    public List<Empleado> empleados { get; set; } 
+    public List<EmpleadoDatos> empleados { get; set; }
     //public List<Empleado> empleado = new List<Empleado>();
 
     public Confirmacion confirmacion { get; set; }
 
-    public Empleado eliminarEmpleado { get; set; }
+    public EmpleadoDatos eliminarEmpleado { get; set; }
 
 
-    public class Empleado { /// Borrar
+    public class EmpleadoDatos
+    { /// Borrar
         public int Id { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
@@ -79,7 +86,7 @@
 
         try
         {
-            var respuestaHttp = await http.Get<List<Empleado>>("Api/Empleado");
+            var respuestaHttp = await http.Get<List<EmpleadoDatos>>("Api/Empleado");
       
             if (!respuestaHttp.Error)
             {
@@ -95,7 +102,7 @@
     }
 
 
-    private void Eliminar(Empleado empleadoEliminar)
+    private void Eliminar(EmpleadoDatos empleadoEliminar)
     {
         confirmacion.Mostrar();
         eliminarEmpleado = empleadoEliminar;
@@ -121,7 +128,7 @@
         }
 
     private void Nuevo() {
-        navigationManager.NavigateTo("/Empleados");
+        navigationManager.NavigateTo("/NuevoEmpleado");
     }
 
 }
