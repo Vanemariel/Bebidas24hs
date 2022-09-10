@@ -1,5 +1,7 @@
 ﻿@page "/Empleados"
 @inject IHttpService http
+@inject NavigationManager navigationManager;
+
 <h1>Empleados</h1>
 
 
@@ -11,17 +13,19 @@
 
         <th class="p-3">Pasword</th>
     </tr>
-    @if (empleado == null)
+    @if (empleados == null)
     {
         <tr>Cargando.....</tr>
     }
-    else if (empleado.Count == 0)
+    else if (empleados.Count == 0)
     {
         <tr>No existen empleados</tr>
     }
     else
     {
-        @foreach (var item in empleado)
+
+
+        @foreach (var item in empleados)
         {
             <tr>
                 <td class="p-3">@item.Id</td>
@@ -30,10 +34,6 @@
                 <td class="p-3">
                         <a class="btn btn-success"
                             href="EmpleadosEditar/@item.Id"> Editar </a>
-
-@*                        <NavLink class="btn btn-success" href="@($"Empleado/editar/{item.Id}")">
-                            Editar a
-                        </NavLink>*@
                     </td>
                 <td class="p-3"><button class="btn btn-warning" @onclick="()=>Eliminar(item)">Eliminar</button></td>
             </tr>
@@ -52,12 +52,19 @@
 
 
 @code {
-
-    public List<Empleado> empleado { get; set; }
+    public List<Empleado> empleados { get; set; } 
+    //public List<Empleado> empleado = new List<Empleado>();
 
     public Confirmacion confirmacion { get; set; }
 
     public Empleado eliminarEmpleado { get; set; }
+
+
+    public class Empleado { /// Borrar
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
+    }
 
 
 
@@ -69,20 +76,30 @@
 
     public async Task Leer()
     {    
-        var respuestaHttp = await http.Get<List<Empleado>>("Api/Empleado");
-      
-        if (!respuestaHttp.Error)
+
+        try
         {
-            empleado = respuestaHttp.Respuesta;           
+            var respuestaHttp = await http.Get<List<Empleado>>("Api/Empleado");
+      
+            if (!respuestaHttp.Error)
+            {
+                empleados = respuestaHttp.Respuesta;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            
+            throw ex;
         }
     }
 
 
-    private void Eliminar(Bebidas24hs.DataBase.Data.Entidades.Empleado empleadoEliminar)
-        {
-            confirmacion.Mostrar();
-            eliminarEmpleado = empleadoEliminar;
-        }
+    private void Eliminar(Empleado empleadoEliminar)
+    {
+        confirmacion.Mostrar();
+        eliminarEmpleado = empleadoEliminar;
+    }
 
 
     private async Task GrabarEliminar()
@@ -102,5 +119,9 @@
             confirmacion.Ocultar();
             eliminarEmpleado = null;
         }
+
+    private void Nuevo() {
+        navigationManager.NavigateTo("/Empleados");
+    }
 
 }

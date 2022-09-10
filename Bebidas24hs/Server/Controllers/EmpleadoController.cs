@@ -22,9 +22,28 @@ namespace Bebidas24hs.Server.Controllers
         //metodo que me muestra la lista completa  
         public async Task<ActionResult<List<Empleado>>> GetAll()
         {
-            //return await context.Empleados.Include(x => x.Ventas).ToListAsync();
-            return await context.Empleados.ToListAsync();
+            List<Empleado> empleados = await context.Empleados
+                .Include(x => x.Ventas)
+                .ToListAsync();
+            return empleados;
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Empleado>> GetById(int id)
+        {
+            // await metodo a ejecutar asincronico
+            Empleado empleado = await context.Empleados
+                .Where(x => x.Id == id)
+                .Include(x => x.Ventas)
+                .FirstOrDefaultAsync();
+            //x=>x.id x seria el registro donde esta el id 
+            if (empleado == null)
+            {
+                return NotFound($"No existe el Producto con id igual a {id}.");
+            }
+            return empleado;
+        }
+
 
         [HttpPost("{id:int}")]
         public async Task<ActionResult<Empleado>> Insert(Empleado empleado)
@@ -40,6 +59,8 @@ namespace Bebidas24hs.Server.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Modified(int id, [FromBody] Empleado Persona)

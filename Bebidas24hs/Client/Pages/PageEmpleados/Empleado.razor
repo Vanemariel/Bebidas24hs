@@ -1,0 +1,83 @@
+﻿@page "/NuevoEmpleado";
+@page "/EmpleadosEditar/{id:int}";
+@using Bebidas24hs.Client.Services.Interface
+@using Bebidas24hs.DataBase.Data.Entidades
+@inject NavigationManager navigationManager
+@inject IHttpService http
+
+<h4>Editar Empleado</h4>
+
+
+<EditForm Model="empleado" OnSubmit="GrabarModificacion">
+    <div class="form-group">
+        <label>Name</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@empleado.Name" />
+            <ValidationMessage For="@(() => empleado.Name)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@empleado.Password" />
+            <ValidationMessage For="@(() => empleado.Password)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="p-2">
+            <button class="btn btn-warning" @onclick="Cancelar">Cancelar</button>
+             @*<button class="btn btn-warning" @onclick="()=>onValidSubmit.InvokeAsync(Empleados)">Cancelar</button>*@
+            <button class="btn btn-warning" type="submit">Guardar</button>
+        </div>
+    </div>
+</EditForm>  
+
+@code {
+
+    [Parameter] public int Id { get; set; }
+
+    private EmpleadoA empleado = new EmpleadoA();
+    public class EmpleadoA /// Borrar
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+           await MostrarEmpleado();        
+        }
+    }
+
+    private async Task MostrarEmpleado()
+    {
+        var httpRespuesta = await http.Get<EmpleadoA>($"Api/Empleado/{Id}");
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        else
+        {
+            empleado = httpRespuesta.Respuesta;
+        }
+    
+    }
+
+    private async Task GrabarModificacion()
+    {
+        var httpRespuesta = await http.Put<EmpleadoA>($"Api/Empleado/{Id}", empleado);
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        navigationManager.NavigateTo("/Empleados");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/Empleados");
+    }
+}
