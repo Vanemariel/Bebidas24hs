@@ -1,19 +1,19 @@
-﻿@page "/Empleados"
+﻿@page "/Ventas"
 @inject IHttpService http
 @inject NavigationManager navigationManager;
 
-<h1>Empleados</h1>
+<h1>Ventas</h1>
 
 
 <table>
 
-    @if (empleados == null)
+    @if (ventas == null)
     {
         <tr>Cargando.....</tr>
     }
-    else if (empleados.Count == 0)
+    else if (ventas.Count == 0)
     {
-        <tr>No existen empleados</tr>
+        <tr>No existen ventas</tr>
     }
     else
     {
@@ -26,20 +26,19 @@
         <tr>
             <th class="p-3">Id</th>
 
-            <th class="p-3">Name</th>
+            <th class="p-3">EmpleadoId</th>
 
-            <th class="p-3">Pasword</th>
         </tr>
 
-        @foreach (var item in empleados)
+        @foreach (var item in ventas)
         {
             <tr>
                 <td class="p-3">@item.Id</td>
-                <td class="p-3">@item.Name</td>
-                <td class="p-3">@item.Password</td>
+                <td class="p-3">@item.EmpleadoId</td>
+                
                 <td class="p-3">
                         <a class="btn btn-success"
-                            href="EmpleadosEditar/@item.Id"> Editar </a>
+                            href="VentasEditar/@item.Id"> Editar </a>
                     </td>
                 <td class="p-3"><button class="btn btn-warning" @onclick="()=>Eliminar(item)">Eliminar</button></td>
             </tr>
@@ -53,24 +52,24 @@
               Titulo="BORRAR"
               textCancelar="Salir"
               textOk="Aceptar">
-    <div>¿Desea eliminar el empleado @eliminarEmpleado.Name?</div>
+    <div>¿Desea eliminar la venta @eliminarVenta.Id?</div>
 </Confirmacion>
 
 
 @code {
-    public List<EmpleadoDatos> empleados { get; set; }
+    public List<VentaDatos> ventas { get; set; }
     //public List<Empleado> empleado = new List<Empleado>();
 
     public Confirmacion confirmacion { get; set; }
 
-    public EmpleadoDatos eliminarEmpleado { get; set; }
+    public VentaDatos eliminarVenta { get; set; }
 
 
-    public class EmpleadoDatos
+    public class VentaDatos
     { /// Borrar
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
+        public string EmpleadoId { get; set; }
+        
     }
 
     protected override async Task OnInitializedAsync()
@@ -83,7 +82,7 @@
     {    
         try
         {
-            var respuestaHttp = await http.Get<List<EmpleadoDatos>>("Api/Empleado");
+            var respuestaHttp = await http.Get<List<VentaDatos>>("Api/Venta");
       
             if (!respuestaHttp.Error)
             {
@@ -98,16 +97,16 @@
     }
 
 
-    private void Eliminar(EmpleadoDatos empleadoEliminar)
+    private void Eliminar(VentaDatos ventaEliminar)
     {
         confirmacion.Mostrar();
-        eliminarEmpleado = empleadoEliminar;
+        eliminarVenta = ventaEliminar;
     }
 
 
     private async Task GrabarEliminar()
     {
-            var respuesta = await http.Delete($"Api/Empleado/{eliminarEmpleado.Id}");
+            var respuesta = await http.Delete($"Api/Venta/{eliminarVenta.Id}");
             if (respuesta.Error)
             {
                 var body = await respuesta.GetBody();
@@ -123,7 +122,7 @@
     }
 
     private void Nuevo() {
-        navigationManager.NavigateTo("/NuevoEmpleado");
+        navigationManager.NavigateTo("/NuevoVenta");
     }
 
 }

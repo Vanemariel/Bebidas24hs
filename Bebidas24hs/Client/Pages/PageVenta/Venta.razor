@@ -1,0 +1,93 @@
+﻿@page "/NuevaVenta";
+@page "/VentasEditar/{id:int}";
+@using Bebidas24hs.Client.Services.Interface
+@using Bebidas24hs.DataBase.Data.Entidades
+@inject NavigationManager navigationManager
+@inject IHttpService http
+
+
+@if (Id == 0)
+{
+    <h4>Nueva Venta</h4>    
+}
+else 
+{
+    <h4>Editar Venta</h4>
+}
+
+
+<EditForm Model="venta" OnSubmit="GrabarModificacion">
+    <div class="form-group">
+        <label>EmpleadoId</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@venta.EmpleadoId" />
+            <ValidationMessage For="@(() => venta.EmpleadoId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="p-2">
+            <button class="btn btn-warning" @onclick="Cancelar">Cancelar</button>
+            <button class="btn btn-warning" type="submit">Guardar</button>
+        </div>
+    </div>
+</EditForm>  
+
+@code {
+
+    [Parameter] public int Id { get; set; }
+
+    public VentaDatos venta = new VentaDatos();
+    public class VentaDatos /// Borrar
+    {
+        public int Id { get; set; }
+        public string EmpleadoId { get; set; }
+        
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            await MostrarVenta();        
+        }
+    }
+
+    private async Task MostrarVenta()
+    {
+        var httpRespuesta = await http.Get<VentaDatos>($"Api/Venta/{Id}");
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        else
+        {
+            venta = httpRespuesta.Respuesta;
+        }
+
+    }
+
+    private async Task GrabarModificacion() // Adaptar para que cree uno nuevo
+    {
+        var httpRespuesta = new HttpRespuesta<object>();
+
+        if (Id != 0)
+        {
+            httpRespuesta = await http.Put<VentaDatos>($"Api/Venta/{Id}", venta);
+        }
+        else 
+        {
+            httpRespuesta = await http.Post<VentaDatos>($"Api/Venta", venta);
+        }
+
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        navigationManager.NavigateTo("/Ventas");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/Ventas");
+    }
+}

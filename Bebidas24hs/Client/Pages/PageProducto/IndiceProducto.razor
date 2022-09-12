@@ -1,45 +1,58 @@
 ﻿@page "/producto"
 @inject IHttpService http
+@inject NavigationManager navigationManager;
+
 <h1>Producto</h1>
 
-<a class="btn btn-primary" href="Producto/Create">Nuevo</a>
 
-<br />
 <table>
-    <tr>
-        <th>Id</th>
 
-        <th>Precio</th>
-
-        <th>Codigo</th>
-
-        <th>Descripcion</th>
-
-    </tr>
-    @if (producto == null)
+    @if (productos == null)
     {
         <tr>Cargando.....</tr>
     }
-    else if (producto.Count == 0)
+    else if (productos.Count == 0)
     {
         <tr>No existen productos</tr>
     }
     else
     {
-        @foreach (var item in producto)
+        <div class="form-group">
+            <div class="p-2">
+                <button class="btn btn-warning" @onclick="Nuevo">Nuevo</button>
+            </div>
+        </div>
+
+        <tr>
+            <th class="p-3">Id</th>
+
+            <th class="p-3">VentaId</th>
+
+            <th class="p-3">Precio</th>
+
+            <th class="p-3">Codigo</th>
+
+            <th class="p-3">Descripcion</th>
+        </tr>
+
+        @foreach (var item in productos)
         {
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Precio</td>
-                <td>@item.Codigo</td>
-                <td>@item.Descripcion</td>
-                <td>
-                    <a class="btn btn-success"
-                       href="producto/editar/@item.Id">
-                        Editar
-                    </a>
-                </td>
-                <td><button class="btn btn-warning" @onclick="()=>Eliminar(item)">Eliminar</button></td>
+                <td class="p-3">@item.Id</td>
+
+                <td class="p-3">@item.VentaId</td>
+
+                <td class="p-3">@item.Precio</td>
+
+                <th class="p-3">Codigo</th>
+
+                <th class="p-3">Descripcion</th>
+
+                <td class="p-3">
+                        <a class="btn btn-success"
+                            href="ProductosEditar/@item.Id"> Editar </a>
+                    </td>
+                <td class="p-3"><button class="btn btn-warning" @onclick="()=>Eliminar(item)">Eliminar</button></td>
             </tr>
         }
     }
@@ -54,17 +67,19 @@
     <div>¿Desea eliminar el producto @eliminarProducto.Id?</div>
 </Confirmacion>
 
-
 @code {
-    List<
+        List<
         Bebidas24hs.DataBase.Data.Entidades.Producto
-     > producto;
-    Shared.Confirmacion confirmacion;
+    > productos;
+    /*Shared.Confirmacion confirmacion;
 
     Bebidas24hs.DataBase.Data.Entidades.Producto eliminarProducto;
 
-    string variableInventada = "";
+    string variableInventada = "";*/
 
+    
+    public Confirmacion confirmacion { get; set; }
+  
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
@@ -73,41 +88,44 @@
 
     private async Task Leer()
     {    
-        var respuestaHttp = await http.Get<List<Bebidas24hs.DataBase.Data.Entidades.Producto>>("Api/Producto");
-      
+        var respuestaHttp = await http.Get<List<Producto>>("Api/Producto");
+
         if (!respuestaHttp.Error)
         {
-            producto = respuestaHttp.Respuesta;           
+            productos = respuestaHttp.Respuesta;           
         }
     }
 
 
-        private void Eliminar(Bebidas24hs.DataBase.Data.Entidades.Producto productoEliminar)
+    private void Eliminar(Producto productoEliminar)
+    {
+        confirmacion.Mostrar();
+        eliminarProducto = productoEliminar;
+    }
+
+
+    private async Task GrabarEliminar()
+    {
+        var respuesta = await http.Delete("Api/Producto/{eliminarProducto.Id}");
+        if (respuesta.Error)
         {
-            confirmacion.Mostrar();
-            eliminarProducto = productoEliminar;
+            var body = await respuesta.GetBody();
         }
+       Cancelar();
+       await Leer();
+    }
 
+    private void Cancelar()
+    {
+        confirmacion.Ocultar();
+        eliminarProducto = null;
+    }
 
-        private async Task GrabarEliminar()
-        {
-            var respuesta = await http.Delete("Api/Producto/{eliminarProducto.Id}");
-            if (respuesta.Error)
-
-            {
-                var body = await respuesta.GetBody();
-            }
-            Cancelar();
-            await Leer();
-        }
-
-        private void Cancelar()
-        {
-            confirmacion.Ocultar();
-            eliminarProducto = null;
-        }
-//los @page me dan la direccion
-//los href me re dirigen a los otros componentes razor de crear o editar
-//los botones son html
+     private void Nuevo() {
+        navigationManager.NavigateTo("/NuevoProducto");
+    }
+     //los @page me dan la direccion
+    //los href me re dirigen a los otros componentes razor de crear o editar
+    //los botones son html
 
 }

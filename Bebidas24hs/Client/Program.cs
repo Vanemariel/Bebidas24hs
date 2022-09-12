@@ -1,6 +1,7 @@
 global using Bebidas24hs.DataBase.Data.Entidades;
 
 
+
 using Bebidas24hs.Client;
 using Bebidas24hs.Client.Services;
 using Bebidas24hs.Client.Services.Interface;

@@ -1,0 +1,127 @@
+﻿@page "/NuevoProducto";
+@page "/ProductoEditar/{id:int}";
+@using Bebidas24hs.Client.Services.Interface
+@using Bebidas24hs.DataBase.Data.Entidades
+@inject NavigationManager navigationManager
+@inject IHttpService http
+
+
+@if (Id == 0)
+{
+    <h4>Nuevo Producto</h4>    
+}
+else 
+{
+    <h4>Editar Producto</h4>
+}
+
+<EditForm Model="producto" OnSubmit="GrabarModificacion">
+    <div class="form-group">
+        <label>EmpleadoId</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@producto.Id" />
+            <ValidationMessage For="@(() => producto.Id)" />
+        </div>
+         <div>
+            <InputText class="form-control" @bind-Value="@producto.VentaId" />
+            <ValidationMessage For="@(() => producto.VentaId)" />
+        </div>
+         <div>
+            <InputText class="form-control" @bind-Value="@producto.Precio" />
+            <ValidationMessage For="@(() => producto.Precio)" />
+        </div>
+         <div>
+            <InputText class="form-control" @bind-Value="@producto.Codigo" />
+            <ValidationMessage For="@(() => producto.Codigo)" />
+        </div>
+         <div>
+            <InputText class="form-control" @bind-Value="@producto.Descripcion" />
+            <ValidationMessage For="@(() => producto.Descripcion)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="p-2">
+            <button class="btn btn-warning" @onclick="Cancelar">Cancelar</button>
+            <button class="btn btn-warning" type="submit">Guardar</button>
+        </div>
+    </div>
+</EditForm>  
+
+
+@code {
+    //el Productos de arriba del formulario es el mismo que Los datos que se completen en el
+    //Formulario, se almacenan en Productos
+    [Parameter] public int Id { get; set; }
+
+    public ProductoDatos producto = new ProductoDatos();
+    public class ProductoDatos /// Borrar
+    {
+        public int Id { get; set; }
+        public string VentaId { get; set; }
+        public string Precio { get; set; }
+        public string Codigo { get; set; }
+        public string Descripcion { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            await MostrarProducto();        
+        }
+    }
+    private async Task MostrarProducto()
+    {
+        var httpRespuesta = await http.Get<ProductoDatos>($"Api/Producto/{Id}");
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        else
+        {
+            producto = httpRespuesta.Respuesta;
+        }
+
+    }
+
+    private async Task GrabarModificacion() // Adaptar para que cree uno nuevo
+    {
+        var httpRespuesta = new HttpRespuesta<object>();
+
+        if (Id != 0)
+        {
+            httpRespuesta = await http.Put<Producto>($"Api/Producto/{Id}", producto);
+        }
+        else 
+        {
+            httpRespuesta = await http.Post<Producto>($"Api/Producto", producto);
+        }
+
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        navigationManager.NavigateTo("/Producto");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/Producto");
+    }
+
+    /*private async Task GrabarNuevo()
+    {
+        var httpRespuesta = await http.Post<Producto>("Api/[controller]", Productos);
+        if (httpRespuesta.Error)
+        {
+            var body = await httpRespuesta.GetBody();
+        }
+        navigationManager.NavigateTo("/Producto");
+    }
+
+    private void Cancelar()
+    {
+        navigationManager.NavigateTo("/Producto");
+    }*/
+
+}
