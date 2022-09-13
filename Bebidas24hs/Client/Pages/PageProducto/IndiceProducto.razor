@@ -1,4 +1,5 @@
 ﻿@page "/producto"
+@using static Bebidas24hs.Client.Pages.PageProducto.Producto
 @inject IHttpService http
 @inject NavigationManager navigationManager;
 
@@ -68,7 +69,12 @@
 </Confirmacion>
 
 @code {
-        List<
+
+    public List<ProductoDatos> productos { get; set; }
+
+    public ProductoDatos eliminarProducto { get; set; }
+
+        /*List<
         Bebidas24hs.DataBase.Data.Entidades.Producto
     > productos;
     /*Shared.Confirmacion confirmacion;
@@ -88,7 +94,7 @@
 
     private async Task Leer()
     {    
-        var respuestaHttp = await http.Get<List<Producto>>("Api/Producto");
+        var respuestaHttp = await http.Get<List<ProductoDatos>>("Api/Producto");
 
         if (!respuestaHttp.Error)
         {
@@ -97,7 +103,7 @@
     }
 
 
-    private void Eliminar(Producto productoEliminar)
+    private void Eliminar(ProductoDatos productoEliminar)
     {
         confirmacion.Mostrar();
         eliminarProducto = productoEliminar;

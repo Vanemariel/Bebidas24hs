@@ -17,26 +17,32 @@ else
 
 <EditForm Model="producto" OnSubmit="GrabarModificacion">
     <div class="form-group">
-        <label>EmpleadoId</label>
-        <div>
-            <InputText class="form-control" @bind-Value="@producto.Id" />
-            <ValidationMessage For="@(() => producto.Id)" />
-        </div>
-         <div>
+        <label>VentaId</label>
+        
+          <div>
             <InputText class="form-control" @bind-Value="@producto.VentaId" />
             <ValidationMessage For="@(() => producto.VentaId)" />
         </div>
-         <div>
+    </div>
+    <div class="form-group">
+        <label>Precio</label>
+        <div>
             <InputText class="form-control" @bind-Value="@producto.Precio" />
             <ValidationMessage For="@(() => producto.Precio)" />
         </div>
-         <div>
+    </div>
+    <div class="form-group">
+        <label>Codigo</label>
+        <div>
             <InputText class="form-control" @bind-Value="@producto.Codigo" />
             <ValidationMessage For="@(() => producto.Codigo)" />
         </div>
-         <div>
+    </div>
+    <div class="form-group">
+        <label>Descripcion</label>
+        <div>s
             <InputText class="form-control" @bind-Value="@producto.Descripcion" />
-            <ValidationMessage For="@(() => producto.Descripcion)" />
+            <ValidationMessage For="@(() => producto .Descripcion)" />
         </div>
     </div>
     <div class="form-group">
@@ -90,11 +96,11 @@ else
 
         if (Id != 0)
         {
-            httpRespuesta = await http.Put<Producto>($"Api/Producto/{Id}", producto);
+            httpRespuesta = await http.Put<ProductoDatos>($"Api/Producto/{Id}", producto);
         }
         else 
         {
-            httpRespuesta = await http.Post<Producto>($"Api/Producto", producto);
+            httpRespuesta = await http.Post<ProductoDatos>($"Api/Producto", producto);
         }
 
         if (httpRespuesta.Error)
