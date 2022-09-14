@@ -44,7 +44,6 @@ namespace Bebidas24hs.Server.Controllers
             return empleado;
         }
 
-
         [HttpPost]
         public async Task<ActionResult<Empleado>> Insert(Empleado empleado)
         { 

@@ -21,12 +21,12 @@ namespace Bebidas24hs.DataBase.Data.Entidades
         [Required(ErrorMessage = "Campo obligatorio.")]
         public string Codigo { get; set; }
 
-        
+
         [Required(ErrorMessage = "Campo obligatorio.")]
         public string Descripcion { get; set; }
 
 
         [ForeignKey("VentaId")]
         public Venta Venta { get; set; }
-    } 
+    }
 }

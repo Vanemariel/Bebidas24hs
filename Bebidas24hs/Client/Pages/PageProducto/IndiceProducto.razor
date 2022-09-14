@@ -1,5 +1,4 @@
 ﻿@page "/producto"
-@using static Bebidas24hs.Client.Pages.PageProducto.Producto
 @inject IHttpService http
 @inject NavigationManager navigationManager;
 
@@ -74,8 +73,8 @@
 
     public ProductoDatos eliminarProducto { get; set; }
 
-        /*List<
-        Bebidas24hs.DataBase.Data.Entidades.Producto
+    /*List<
+    Bebidas24hs.DataBase.Data.Entidades.Producto
     > productos;
     /*Shared.Confirmacion confirmacion;
 
@@ -83,8 +82,17 @@
 
     string variableInventada = "";*/
 
-    
+
     public Confirmacion confirmacion { get; set; }
+
+    public class ProductoDatos
+    { /// Borrar
+        public int Id { get; set; }
+        public int VentaId { get; set; }
+        public int Codigo { get; set; }
+        public int Precio { get; set; }
+        public string Descripcion { get; set;  }
+    }
   
     protected override async Task OnInitializedAsync()
     {
