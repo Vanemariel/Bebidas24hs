@@ -50,7 +50,7 @@ namespace Bebidas24hs.DataBase.Data
                     Descripcion = "Pepsi",
                     VentaId = 2321
                 }
-            );
+            ); 
 
             modelBuilder.Entity<Venta>().HasData(
                 new Venta
@@ -64,8 +64,6 @@ namespace Bebidas24hs.DataBase.Data
                     Id = 112,
                 }
             );
-
-
         }
 
         public DbSet<Empleado> Empleados { get; set; }

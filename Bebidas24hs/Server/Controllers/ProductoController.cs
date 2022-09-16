@@ -19,38 +19,29 @@ namespace Bebidas24hs.Server.Controllers
         }
 
         [HttpGet]
-       //metodo que me muestra la lista
-        public async Task<IEnumerable<Producto>> GetAll()//obtener todo All
+        //metodo que me muestra la lista
+        public async Task<ActionResult<List<Producto>>> GetAll()
         {
-            List<Producto> mercaderias = await context.Productos.ToListAsync();
-            //retorna la lista de la tabla 
-
-            List<Producto> Listado = new List<Producto>();
-
-            foreach (Producto mercaderia in mercaderias)
-            {
-                Listado.Add(new Producto
-                {
-                    Id = mercaderia.Id,   
-                    Codigo = mercaderia.Codigo, 
-                    Precio = mercaderia.Precio,     
-                    Descripcion = mercaderia.Descripcion,
-                });
-            }
-            return Listado;
+            List<Producto> productos = await context.Productos
+                .Include(x => x.Venta)
+                .ToListAsync();
+            return productos;
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Producto>> GetById(int id)
         {
             // await metodo a ejecutar asincronico
-            Producto prod = await context.Productos.Where(x => x.Id == id).FirstOrDefaultAsync();
+            Producto productos = await context.Productos
+                .Where(x => x.Id == id)
+                .Include(x => x.Venta)
+                .FirstOrDefaultAsync();
             //x=>x.id x seria el registro donde esta el id 
-            if (prod == null)
+            if (productos == null)
             {
                 return NotFound($"No existe el Producto con id igual a {id}.");
             }
-            return prod;
+            return productos;
         }
 
         [HttpPost]
@@ -67,6 +58,35 @@ namespace Bebidas24hs.Server.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Modified(int id, [FromBody] Producto Producto)
+        {
+            //bsco un usuario de la clase producto de la tabla Productos x id
+            Producto productoencontrado = await context.Productos.Where(x => x.Id == id).FirstOrDefaultAsync();
+            //si mi id es null no existe 
+            if (productoencontrado == null)
+            {
+                return NotFound("no existe el producto a modificar.");
+            }
+            //si es correcto puedo modificar todo lo q sigue
+            
+            productoencontrado.Codigo = Producto.Codigo;
+            productoencontrado.Id = Producto.Id;
+            productoencontrado.Descripcion = Producto.Descripcion;
+            productoencontrado.Id = Producto.Id;
+
+            try
+            {
+                context.Productos.Update(productoencontrado);
+                await context.SaveChangesAsync();
+                return Ok("Los datos han sido cambiados");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
 
         [HttpDelete("{id:int}")]//metodo borrar 
         public async Task<ActionResult> Delete(int id)

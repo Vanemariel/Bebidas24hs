@@ -39,7 +39,7 @@ namespace Bebidas24hs.Server.Controllers
             //x=>x.id x seria el registro donde esta el id 
             if (empleado == null)
             {
-                return NotFound($"No existe el Producto con id igual a {id}.");
+                return NotFound($"No existe el Empleado con id igual a {id}.");
             }
             return empleado;
         }
@@ -64,7 +64,7 @@ namespace Bebidas24hs.Server.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Modified(int id, [FromBody] Empleado Persona)
         {
-            //bsco un usuario de la clase empleado de la tabla personaje x id
+            //bsco un usuario de la clase empleado de la tabla Empleados x id
             Empleado personaencontrada = await context.Empleados.Where(x => x.Id == id).FirstOrDefaultAsync();
             //si mi id es null no existe 
             if (personaencontrada == null)
