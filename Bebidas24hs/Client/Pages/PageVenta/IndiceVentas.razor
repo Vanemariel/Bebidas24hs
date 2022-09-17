@@ -1,4 +1,6 @@
 ﻿@page "/ventas"
+@using Bebidas24hs.Client.Services.Interface
+@using Bebidas24hs.Client.Shared
 @inject IHttpService http
 @inject NavigationManager navigationManager;
 
@@ -68,6 +70,7 @@
     { /// Borrar
         public int Id { get; set; }
         public string EmpleadoId { get; set; }
+
         
     }
 
