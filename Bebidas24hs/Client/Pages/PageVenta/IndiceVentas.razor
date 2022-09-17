@@ -57,7 +57,7 @@
 
 @code {
     public List<VentaDatos> ventas { get; set; }
-    //public List<Empleado> empleado = new List<Empleado>();
+    //public List<Venta> ventas { get; set; }
 
     public Confirmacion confirmacion { get; set; }
 
@@ -85,7 +85,7 @@
       
             if (!respuestaHttp.Error)
             {
-                empleados = respuestaHttp.Respuesta;
+                ventas = respuestaHttp.Respuesta;
             }
         }
         catch (Exception ex)
