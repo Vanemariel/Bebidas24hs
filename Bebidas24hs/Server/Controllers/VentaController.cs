@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bebidas24hs.Server.Controllers
 {
+
+    [ApiController]
+    [Route("Api/[controller]")]
     public class VentaController : ControllerBase
     {
         private readonly BDContext context;
@@ -18,7 +21,8 @@ namespace Bebidas24hs.Server.Controllers
         //metodo que me muestra la lista
         public async Task<ActionResult<List<Venta>>> GetAll()
         {
-            return await context.Ventas.Include(x => x.Empleado).ToListAsync();
+            List<Venta> ventas =await context.Ventas.Include(x => x.Empleado).ToListAsync();
+            return ventas;
             //return await context.Ventas.ToListAsync();
         }
 
