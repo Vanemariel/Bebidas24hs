@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Content Remove="Pages\IndiceEmpleados.razor" />
-    <Content Remove="Pages\PageVenta\IndiceVentas.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +22,6 @@
 
   <ItemGroup>
     <None Include="Pages\PageEmpleados\IndiceEmpleados.razor" />
-    <None Include="Pages\PageVenta\IndiceVentas.razor" />
   </ItemGroup>
 
 </Project>

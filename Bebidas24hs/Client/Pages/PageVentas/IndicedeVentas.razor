@@ -1,4 +1,4 @@
-﻿@page "/ventas"
+﻿@page "/Ventas"
 @using Bebidas24hs.Client.Services.Interface
 @using Bebidas24hs.Client.Shared
 @inject IHttpService http
@@ -9,13 +9,13 @@
 
 <table>
 
-    @if (ventas == null)
+    @if (Venta == null)
     {
         <tr>Cargando.....</tr>
     }
-    else if (ventas.Count == 0)
+    else if (Venta.Count == 0)
     {
-        <tr>No existen ventas</tr>
+        <tr>No existen Venta</tr>
     }
     else
     {
@@ -31,7 +31,7 @@
 
         </tr>
 
-        @foreach (var item in ventas)
+        @foreach (var item in Venta)
         {
             <tr>
                 <td class="p-3">@item.Id</td>
@@ -58,7 +58,7 @@
 
 
 @code {
-    public List<VentaDatos> ventas { get; set; }
+    public List<VentaDatos> Venta { get; set; }
     //public List<Venta> ventas { get; set; }
 
     public Confirmacion confirmacion { get; set; }
@@ -88,7 +88,7 @@
       
             if (!respuestaHttp.Error)
             {
-                ventas = respuestaHttp.Respuesta;
+                Venta = respuestaHttp.Respuesta;
             }
         }
         catch (Exception ex)
@@ -120,7 +120,7 @@
     private void Cancelar()
     {
             confirmacion.Ocultar();
-            eliminarEmpleado = null;
+            eliminarVenta = null;
     }
 
     private void Nuevo() {
